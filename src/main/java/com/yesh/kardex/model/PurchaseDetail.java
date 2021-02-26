@@ -14,7 +14,7 @@ private static final long serialVersionUID = 1L;
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @JoinColumn(name = "FK_Producto", updatable = false, nullable = false)
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private Product product;
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "FK_Compra", updatable = false, nullable = false)
@@ -23,6 +23,10 @@ private static final long serialVersionUID = 1L;
     private long quantity;
     @Column(name = "Total")
     private String total;
+    
+    public PurchaseDetail() {
+    	
+    }
     
     public Product getProduct() {
 		return product;

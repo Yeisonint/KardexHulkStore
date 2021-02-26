@@ -25,6 +25,10 @@ private static final long serialVersionUID = 1L;
     @Column(name = "Fecha")
     private Date date;
     
+    public Purchase() {
+    	
+    }
+    
     public Client getCliente() {
 		return cliente;
 	}

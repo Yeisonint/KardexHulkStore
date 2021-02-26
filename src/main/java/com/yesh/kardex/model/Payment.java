@@ -9,11 +9,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+@SuppressWarnings("serial")
 @Entity
 @Table(name = "Pago")
 public class Payment implements Serializable {
-
-	private static final long serialVersionUID = 1L;
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,9 +22,17 @@ public class Payment implements Serializable {
 	@Column(name = "Num_Tarjeta", nullable = false, updatable = false)
     private String numCard;
 	
+	public Payment() {
+		
+	}
 	
+    public Payment(String amount, String numCard) {
+		super();
+		this.amount = amount;
+		this.numCard = numCard;
+	}
 
-    public String getAmount() {
+	public String getAmount() {
 		return amount;
 	}
 
