@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import com.yesh.kardex.dto.ClientDTO;
+import com.yesh.kardex.exception.ClientAlreadyExistException;
 import com.yesh.kardex.exception.PasswordMismatchException;
 import com.yesh.kardex.service.ClientService;
 
@@ -33,7 +34,7 @@ public class ClientController {
 	@PostMapping("/registrationProcess")
 	public String addUser(HttpServletRequest request, HttpServletResponse response,
 			@ModelAttribute("client") ClientDTO client) {
-		log.info("Solicitud REST para crear un nuevo cliente : {}", client);
+		log.info("Solicitud para crear un nuevo cliente : {}", client);
 		try {
 			if(client.getPassword().equals(client.getMatchingPassword())) {
 				clientService.registerNewClient(client);
@@ -42,7 +43,10 @@ public class ClientController {
 				throw new PasswordMismatchException("Contraseñas diferentes");
 			}
 		} catch (PasswordMismatchException psme) {
-			System.out.println(psme.getMessage());
+			log.error(psme.getMessage());
+			return "registration.html";
+		} catch (ClientAlreadyExistException caee) {
+			log.error(caee.getMessage());
 			return "registration.html";
 		}
 		return "login.html";

@@ -25,11 +25,12 @@ public class ConfigSecurity extends WebSecurityConfigurerAdapter {
 		http
 		.authorizeRequests().antMatchers("/").permitAll().and()
     	.authorizeRequests().antMatchers("/public/**").permitAll().and()
+    	.authorizeRequests().antMatchers("/newproduct").permitAll().and()
+    	.authorizeRequests().antMatchers("/addproduct").permitAll().and()
     	.authorizeRequests().antMatchers("/registration").permitAll().and()
     	.authorizeRequests().antMatchers("/registrationProcess").permitAll().and()
     	.authorizeRequests().antMatchers("/h2-console/**").permitAll().and()
-    	.formLogin().loginPage("/login").defaultSuccessUrl("/", true).permitAll().and()
-    	.authorizeRequests().antMatchers("/api/**").permitAll();
+    	.formLogin().loginPage("/login").defaultSuccessUrl("/", true).permitAll();
 		
 		// Cerrar sesión
 		http

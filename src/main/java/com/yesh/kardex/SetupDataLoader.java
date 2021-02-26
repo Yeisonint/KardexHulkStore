@@ -5,11 +5,11 @@ import java.util.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.*;
 
-import com.yesh.kardex.model.Client;
+//import com.yesh.kardex.model.Client;
 import com.yesh.kardex.model.Privilege;
 import com.yesh.kardex.model.Role;
 import com.yesh.kardex.repository.*;
@@ -20,8 +20,8 @@ public class SetupDataLoader implements
 
     boolean alreadySetup = false;
 
-    @Autowired
-    private ClientRepository clientRepository;
+    //@Autowired
+    //private ClientRepository clientRepository;
  
     @Autowired
     private RoleRepository roleRepository;
@@ -33,7 +33,7 @@ public class SetupDataLoader implements
     @Transactional
     public void onApplicationEvent(ContextRefreshedEvent event) {
 
-    	BCryptPasswordEncoder Encoder = new BCryptPasswordEncoder();
+    	//BCryptPasswordEncoder Encoder = new BCryptPasswordEncoder();
  
         if (alreadySetup)
             return;
@@ -47,6 +47,7 @@ public class SetupDataLoader implements
         createRoleIfNotFound("ROLE_ADMIN", adminPrivileges);
         createRoleIfNotFound("ROLE_USER", Arrays.asList(readPrivilege));
         
+        /*
         Role adminRole = roleRepository.findByName("ROLE_ADMIN");
         Client client = new Client();
         client.setName("Test name");
@@ -56,6 +57,7 @@ public class SetupDataLoader implements
         client.setRoles(Arrays.asList(adminRole));
         client.setEnabled(true);
         clientRepository.save(client);
+        */
 
         alreadySetup = true;
     }

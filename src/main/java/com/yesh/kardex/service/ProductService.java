@@ -25,7 +25,7 @@ public class ProductService {
     public Product createProduct(ProductDTO productDTO) {
         Product product = new Product();
         product.setCode(productDTO.getCode());
-        product.setImg(productDTO.getIMG());
+        product.setName(productDTO.getName());
         product.setDescription(productDTO.getDescription());
         product.setQuantity(productDTO.getQuantity());
         product.setPrice(productDTO.getPrice());
@@ -43,12 +43,24 @@ public class ProductService {
             ProductDTO productDTO = new ProductDTO();
             productDTO.setId(product.getId());
             productDTO.setCode(product.getCode());
-            productDTO.setIMG(product.getImg());
+            productDTO.setName(product.getName());
             productDTO.setDescription(product.getDescription());
             productDTO.setQuantity(product.getQuantity());
             productDTO.setPrice(product.getPrice());
             return productDTO;
         }).collect(Collectors.toList());
+    }
+    
+    @Transactional(readOnly = true)
+    public ProductDTO getProductById(long id) {
+    	Product product = productRepository.findById(id).get();
+    	ProductDTO productDTO = new ProductDTO();
+        productDTO.setId(product.getId());
+        productDTO.setCode(product.getCode());
+        productDTO.setDescription(product.getDescription());
+        productDTO.setQuantity(product.getQuantity());
+        productDTO.setPrice(product.getPrice());
+        return productDTO;
     }
 
 }

@@ -91,5 +91,17 @@ public class ClientDTO {
 	public void setMatchingPassword(String matchingPassword) {
 		this.matchingPassword = matchingPassword;
 	}
+	
+    @Override
+    public String toString() {
+        return "Cliente{" +
+                "id=" + id +
+                ", usuario='" + username + '\'' +
+                ", nombre='" + name + '\'' +
+                ", correo='" + email + '\'' +
+                ", clave1='" + password + '\'' +
+                ", clave2='" + matchingPassword + '\'' +
+                '}';
+    }
 
 }

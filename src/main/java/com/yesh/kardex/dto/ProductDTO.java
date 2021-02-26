@@ -1,9 +1,6 @@
 package com.yesh.kardex.dto;
 
-import java.sql.Blob;
-
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.*;
 
 public class ProductDTO {
 
@@ -17,8 +14,6 @@ public class ProductDTO {
 	@NotNull
     @NotEmpty
     private String code;
-	@NotEmpty
-    private Blob img;
     @NotNull
     @NotEmpty
     private String description;
@@ -33,11 +28,10 @@ public class ProductDTO {
     public ProductDTO() {
     }
 
-    public ProductDTO(String name, String code, Blob img, String description, Long quantity, Long price) {
+    public ProductDTO(String name, String code, String description, Long quantity, Long price) {
 		super();
 		this.name = name;
 		this.code = code;
-		this.img = img;
 		this.description = description;
 		this.quantity = quantity;
 		this.price = price;
@@ -65,14 +59,6 @@ public class ProductDTO {
 
     public void setCode(String code) {
         this.code = code;
-    }
-    
-    public Blob getIMG() {
-        return img;
-    }
-
-    public void setIMG(Blob img) {
-        this.img = img;
     }
 
     public String getDescription() {
@@ -103,6 +89,7 @@ public class ProductDTO {
     public String toString() {
         return "ProductDTO{" +
                 "id=" + id +
+                ", nombre='" + name + '\'' +
                 ", codigo='" + code + '\'' +
                 ", descripcion='" + description + '\'' +
                 ", existencias=" + quantity +

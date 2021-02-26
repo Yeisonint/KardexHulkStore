@@ -1,7 +1,6 @@
 package com.yesh.kardex.model;
 
 import java.io.Serializable;
-import java.sql.Blob;
 import java.util.Objects;
 import javax.persistence.*;
 
@@ -20,8 +19,6 @@ public class Product implements Serializable {
     private String name;
     @Column(name = "Codigo")
     private String code;
-    @Column(name = "Imagen")
-    private Blob img;
     @Column(name = "Descripcion")
     private String description;
     @Column(name = "Existencias")
@@ -33,10 +30,9 @@ public class Product implements Serializable {
     	
     }
     
-    public Product(String name, String code, Blob img, String description, Long quantity, Long price) {
+    public Product(String name, String code, String description, Long quantity, Long price) {
 		this.name = name;
 		this.code = code;
-		this.img = img;
 		this.description = description;
 		this.quantity = quantity;
 		this.price = price;
@@ -64,14 +60,6 @@ public class Product implements Serializable {
 
     public void setCode(String code) {
         this.code = code;
-    }
-    
-    public Blob getImg() {
-        return img;
-    }
-
-    public void setImg(Blob img) {
-        this.img = img;
     }
 
     public String getDescription() {
