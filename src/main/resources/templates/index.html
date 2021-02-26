@@ -38,13 +38,11 @@
 					<li class="nav-item dropdown"><a
 						class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
 						role="button" data-bs-toggle="dropdown" aria-expanded="false">
-							Iniciar Sesión </a>
+							Usuarios </a>
 						<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-							<li><a class="dropdown-item" href="#">Action</a></li>
-							<li><a class="dropdown-item" href="#">Another action</a></li>
-							<li><hr class="dropdown-divider"></li>
-							<li><a class="dropdown-item" href="#">Something else
-									here</a></li>
+							<li th:unless="${#authorization.expression('isAuthenticated()')}"><a class="dropdown-item" href="/login">Iniciar sesión</a></li>
+							<li th:unless="${#authorization.expression('isAuthenticated()')}"><a class="dropdown-item" href="/registration">Registrarse</a></li>
+							<li th:if="${#authorization.expression('isAuthenticated()')}"><a class="dropdown-item" href="/logout">Cerrar sesión</a></li>
 						</ul></li>
 				</ul>
 			</div>

@@ -25,7 +25,7 @@ public class ProductController {
     private ProductService productService;
 
     @PostMapping("/productos")
-    public ResponseEntity<Product> createUser(@RequestBody ProductDTO productDTO) throws URISyntaxException {
+    public ResponseEntity<Product> createProduct(@RequestBody ProductDTO productDTO) throws URISyntaxException {
         log.info("Solicitud REST para almacenar producto : {}", productDTO);
 
         Product newProduct = productService.createProduct(productDTO);

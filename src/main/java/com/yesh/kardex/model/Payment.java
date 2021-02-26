@@ -19,13 +19,34 @@ public class Payment implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 	@Column(name = "Valor", nullable = false, updatable = false)
-    private long amount;
+    private String amount;
+	@Column(name = "Num_Tarjeta", nullable = false, updatable = false)
+    private String numCard;
+	
+	
 
-    @Override
+    public String getAmount() {
+		return amount;
+	}
+
+	public void setAmount(String amount) {
+		this.amount = amount;
+	}
+
+	public String getNumCard() {
+		return numCard;
+	}
+
+	public void setNumCard(String numCard) {
+		this.numCard = numCard;
+	}
+
+	@Override
     public String toString() {
         return "Compra{" +
                 "id=" + id +
                 ", valor='" + amount +
+                ", tarjeta='" + numCard +
                 '}';
     }
 }

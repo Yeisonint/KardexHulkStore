@@ -2,15 +2,31 @@ package com.yesh.kardex.dto;
 
 import java.sql.Blob;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 public class ProductDTO {
 
 	// Atributos
+	@NotNull
+    @NotEmpty
     private Long id;
+	@NotNull
+    @NotEmpty
     private String name;
+	@NotNull
+    @NotEmpty
     private String code;
+	@NotEmpty
     private Blob img;
+    @NotNull
+    @NotEmpty
     private String description;
+    @NotNull
+    @NotEmpty
     private Long quantity;
+    @NotNull
+    @NotEmpty
     private Long price;
     
     // Constructor

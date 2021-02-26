@@ -29,8 +29,20 @@ public class Product implements Serializable {
     @Column(name = "Precio")
     private Long price;
     
+    public Product() {
+    	
+    }
+    
+    public Product(String name, String code, Blob img, String description, Long quantity, Long price) {
+		this.name = name;
+		this.code = code;
+		this.img = img;
+		this.description = description;
+		this.quantity = quantity;
+		this.price = price;
+	}
 
-    public String getName() {
+	public String getName() {
 		return name;
 	}
 
@@ -92,11 +104,6 @@ public class Product implements Serializable {
         if (o == null || getClass() != o.getClass()) return false;
         Product product = (Product) o;
         return Objects.equals(code, product.code);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(code);
     }
 
     @Override

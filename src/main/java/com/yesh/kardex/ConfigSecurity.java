@@ -1,26 +1,21 @@
 package com.yesh.kardex;
 
-import javax.sql.DataSource;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+@ComponentScan("com.yesh.kardex")
 @Configuration
-@ComponentScan("com.yesh")
 @EnableWebSecurity
 public class ConfigSecurity extends WebSecurityConfigurerAdapter {
-	
+
 	@Autowired
-	private DataSource dataSource;
+    private BasicAuthenticationProvider authProvider;
 	
 	private static Logger log = LogManager.getLogger(ConfigSecurity.class);
     
@@ -30,13 +25,20 @@ public class ConfigSecurity extends WebSecurityConfigurerAdapter {
 		http
 		.authorizeRequests().antMatchers("/").permitAll().and()
     	.authorizeRequests().antMatchers("/public/**").permitAll().and()
+    	.authorizeRequests().antMatchers("/registration").permitAll().and()
+    	.authorizeRequests().antMatchers("/registrationProcess").permitAll().and()
     	.authorizeRequests().antMatchers("/h2-console/**").permitAll().and()
+    	.formLogin().loginPage("/login").defaultSuccessUrl("/", true).permitAll().and()
     	.authorizeRequests().antMatchers("/api/**").permitAll();
 		
 		// Cerrar sesión
-		http.logout().logoutUrl("/logout")
-	      .logoutSuccessUrl("/login")
+		http
+		.logout().logoutUrl("/logout")
+	      .logoutSuccessUrl("/")
 	      .invalidateHttpSession(true);
+		
+		// Autenticación propia
+		http.authenticationProvider(authProvider);
 		
 		// Permite la consola H2
 		http.csrf().disable();
@@ -46,39 +48,8 @@ public class ConfigSecurity extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests()
 	      .anyRequest().authenticated()
 	      .and().formLogin().permitAll();
+		
+		log.debug("Iniciado el servidor con Spring Security.");
 	}
-
-	@Bean
-	public BCryptPasswordEncoder passwordEncoder() {
-	    return new BCryptPasswordEncoder();
-	}
-	
-	  @Override
-	  protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		  
-		  log.info("Anadiendo los usuarios de la base de datos a Spring Security");
-		  
-		  // Añadir a todos los usuarios activos de la base de datos
-		  auth.jdbcAuthentication().dataSource(dataSource)
-	        .usersByUsernameQuery(
-	        		"SELECT USUARIO AS PRINCIPAL, CLAVE AS CREDENTIALS, ACTIVO AS ENABLED FROM ADMINISTRADORES WHERE USUARIO=?"
-	        ).authoritiesByUsernameQuery(
-	        		"SELECT USUARIO AS PRINCIPAL, ROL AS ROLE FROM ADMINISTRADORES WHERE USUARIO=?"
-	        		).rolePrefix("ROLE_").passwordEncoder(passwordEncoder());
-		  
-		  auth.jdbcAuthentication().dataSource(dataSource)
-	        .usersByUsernameQuery(
-	        		"SELECT USUARIO AS PRINCIPAL, CLAVE AS CREDENTIALS, ACTIVO AS ENABLED FROM JEFES WHERE USUARIO=?"
-	        ).authoritiesByUsernameQuery(
-	        		"SELECT USUARIO AS PRINCIPAL, ROL AS ROLE FROM JEFES WHERE USUARIO=?"
-	        		).rolePrefix("ROLE_").passwordEncoder(passwordEncoder());
-		  
-		  auth.jdbcAuthentication().dataSource(dataSource)
-	        .usersByUsernameQuery(
-	        		"SELECT USUARIO AS PRINCIPAL, CLAVE AS CREDENTIALS, ACTIVO AS ENABLED FROM EMPLEADOS WHERE USUARIO=?"
-	        ).authoritiesByUsernameQuery(
-	        		"SELECT USUARIO AS PRINCIPAL, ROL AS ROLE FROM EMPLEADOS WHERE USUARIO=?"
-	        		).rolePrefix("ROLE_").passwordEncoder(passwordEncoder());
-	  }
 
 }

@@ -1,0 +1,27 @@
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html>
+<head>
+<title>Registrarse</title>
+<!-- Font Awesome CSS -->
+<link rel="stylesheet" href="/public/css/fontawesome.css" />
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="/public/css/bootstrap.min.css">
+</head>
+<body>
+<div class=" h-100 d-flex justify-content-center align-items-center">
+	<form th:action="@{/registrationProcess}" th:object="${client}" method="POST">
+		<h1 class="text-center">Registrarse</h1>
+		<input type="text" class="form-control" th:field="*{name}" id="name" name="name" placeholder="Nombre">
+		<input type="text" class="form-control" th:field="*{username}" id="username" name="username" placeholder="Usuario">
+		<input type="email" class="form-control" th:field="*{email}" id="email" name="email" placeholder="Email">
+		<input type="password" class="form-control" th:field="*{password}" id="pass" name="pass" placeholder="Clave">
+		<p th:each="error : ${#fields.errors('password')}" th:text="${error}">Validation error</p>
+		<h6>Confirmar contraseña</h6>
+		<input type="password" class="form-control" th:field="*{matchingPassword}" id="matchpass" name="matchpass" placeholder="Clave">
+		<button type="submit" class="btn btn-primary">Registrarse</button>
+	</form>
+</div>
+	<!-- Bootstrap JS -->
+	<script src="/public/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

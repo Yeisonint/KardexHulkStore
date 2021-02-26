@@ -24,5 +24,38 @@ private static final long serialVersionUID = 1L;
     @Temporal(TemporalType.DATE)
     @Column(name = "Fecha")
     private Date date;
+    
+    public Client getCliente() {
+		return cliente;
+	}
 
+	public void setCliente(Client cliente) {
+		this.cliente = cliente;
+	}
+
+	public Payment getPayment() {
+		return payment;
+	}
+
+	public void setPayment(Payment payment) {
+		this.payment = payment;
+	}
+
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
+	@Override
+    public String toString() {
+        return "Compra{" +
+                "id=" + id +
+                ", cliente='" + cliente + '\'' +
+                ", pago='" + payment + '\'' +
+                ", Fecha='" + date + '\'' +
+                '}';
+    }
 }
